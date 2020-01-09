@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+  <link rel="stylesheet" href="./assets/news.css" />
+  <script src="./lib/jquery.js"></script>
+  <script src="./lib/template-web.js"></script>
+  <script src="./js/news.js"></script>
+
+  <style>
+    .news-item {
+  display: flex;
+  border: 1px solid #eee;
+  width: 700px;
+  padding: 10px;
+  margin-bottom: 5px;
+}
+
+.thumb {
+  display: block;
+  width: 230px;
+  height: 140px;
+  background-color: #ccc;
+  margin-right: 10px;
+}
+
+.right-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 12px;
+  flex: 1;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: normal;
+}
+
+.tags span {
+  display: block;
+  float: left;
+  background-color: #F0F0F0;
+  line-height: 20px;
+  padding: 0 10px;
+  border-radius: 10px;
+  margin-right: 8px;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+  </style>
+</head>
+
+<body>
+
+  <div id="news-list"></div>
+
+  <!-- 定义模板 -->
+  <script type="text/html" id="tpl-news">
+      {{each data}}
+      <div class="news-item">
+        <img class="thumb" src="{{'http://www.liulongbin.top:3006' + $value.img}}" alt="" />
+        <div class="right-box">
+          <h1 class="title">{{$value.title}}</h1>
+          <div class="tags">
+            {{each $value.tags}}
+            <span>{{$value}}</span>
+            {{/each}}
+          </div>
+          <div class="footer">
+            <div>
+              <span>{{$value.source}}</span>&nbsp;&nbsp;
+              <span>{{$value.time | dateFormat}}</span>
+            </div>
+            <span>评论数：{{$value.cmtcount}}</span>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </script>
+
+    <script>
+    
+    $(function () {
+  // 给时间补零的函数
+  function padZero(n) {
+    if (n < 10) {
+      return '0' + n
+    } else {
+      return n
+    }
+  }
+
+  // 定义格式化时间的过滤器
+  template.defaults.imports.dateFormat = function (dtStr) {
+    var dt = new Date(dtStr)
+
+    var y = dt.getFullYear()
+    var m = padZero(dt.getMonth() + 1)
+    var d = padZero(dt.getDate())
+
+    var hh = padZero(dt.getHours())
+    var mm = padZero(dt.getMinutes())
+    var ss = padZero(dt.getSeconds())
+
+    return y + '-' + m + '-' + d + ' ' + hh + ':' + mm + ':' + ss
+  }
+
+  // 获取新闻列表的函数
+  function getNewsList() {
+    $.get('http://www.liulongbin.top:3006/api/news', function (res) {
+      if (res.status !== 200) {
+        return alert('获取新闻列表数据失败！')
+      }
+      for (var i = 0; i < res.data.length; i++) {
+        // 把每一项的 tags 属性，从字符串改造成字符串的数组
+        res.data[i].tags = res.data[i].tags.split(',')
+      }
+      console.log(res)
+      var htmlStr = template('tpl-news', res)
+      $('#news-list').html(htmlStr)
+    })
+  }
+
+  getNewsList()
+
+})
+
+    </script>
+
+</body>
+
+</html>
