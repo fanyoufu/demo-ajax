@@ -22,9 +22,7 @@
 
   <div class="ui page grid">
     <!-- 添加图书的Panel面板 -->
-
-    <div class="ui row  ">
-
+    <div class="ui row ">
       <div class="ui column fluid form segment">
         <h3 class="ui header dividing">
           <i class="book icon"></i>
@@ -78,40 +76,10 @@
               <td><a href="javascript:;" class="del" data-id="1">删除</a></td>
             </tr>
         </table>
-
       </div>
-
     </div>
   </div>
   <script>
-    $('.ui.form')
-      .form({
-        fields: {
-          iptBookname: {
-            indentfier: "iptBookname",
-            rules: [{
-              type: "empty",
-              prompt:"书名不能为空！"
-            }]
-          },
-          iptAuthor: {
-            indentfier: "iptAuthor",
-            rules: [{
-              type: "empty",
-            }]
-          },
-          iptPublisher: {
-            indentfier: "iptPublisher",
-            rules: [{
-              type: "empty",
-            }]
-          }
-        },
-     
-        onFailure:function(info){
-          console.log(info)
-        }
-      });
     $(function () {
       // 获取图书列表数据
       function getBookList() {
@@ -128,29 +96,25 @@
 
       getBookList()
 
-      /* $('.del').on('click', function () {
-        console.log('ok')
-      }) */
-
       // 通过代理的方式为动态添加的元素绑定点击事件
       $('tbody').on('click', '.del', function () {
         var id = $(this).attr('data-id')
-        $.get('http://www.liulongbin.top:3006/api/delbook', { id: id }, function (res) {
+        $.get('http://ajax.frontend.itheima.net:3006/api/delbook', { id: id }, function (res) {
           if (res.status !== 200) return alert('删除图书失败！')
           getBookList()
         })
       })
 
       $('#btnAdd').on('click', function () {
-        $(this).addClass('loading');
         var bookname = $('#iptBookname').val().trim();
         var author = $('#iptAuthor').val().trim();
         var publisher = $('#iptPublisher').val().trim();
         if (bookname.length <= 0 || author.length <= 0 || publisher.length <= 0) {
           return alert('请填写完整的图书信息！')
         }
+        $(this).addClass('loading');
 
-        $.post('http://www.liulongbin.top:3006/api/addbook', { bookname: bookname, author: author, publisher: publisher }, function (res) {
+        $.post('http://ajax.frontend.itheima.net:3006/api/addbook', { bookname: bookname, author: author, publisher: publisher }, function (res) {
           $('#btnAdd').removeClass('loading');
           if (res.status !== 201) return alert('添加图书失败！')
           getBookList()
