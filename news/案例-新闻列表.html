@@ -13,49 +13,48 @@
 
   <style>
     .news-item {
-  display: flex;
-  border: 1px solid #eee;
-  width: 700px;
-  padding: 10px;
-  margin-bottom: 5px;
-}
+      display: flex;
+      border: 1px solid #eee;
+      width: 700px;
+      padding: 10px;
+      margin-bottom: 5px;
+    }
 
-.thumb {
-  display: block;
-  width: 230px;
-  height: 140px;
-  background-color: #ccc;
-  margin-right: 10px;
-}
+    .thumb {
+      display: block;
+      width: 230px;
+      height: 140px;
+      background-color: #ccc;
+      margin-right: 10px;
+    }
 
-.right-box {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  font-size: 12px;
-  flex: 1;
-}
+    .right-box {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      font-size: 12px;
+      flex: 1;
+    }
 
-.title {
-  font-size: 20px;
-  font-weight: normal;
-}
+    .title {
+      font-size: 20px;
+      font-weight: normal;
+    }
 
-.tags span {
-  display: block;
-  float: left;
-  background-color: #F0F0F0;
-  line-height: 20px;
-  padding: 0 10px;
-  border-radius: 10px;
-  margin-right: 8px;
-}
+    .tags span {
+      display: block;
+      float: left;
+      background-color: #F0F0F0;
+      line-height: 20px;
+      padding: 0 10px;
+      border-radius: 10px;
+      margin-right: 8px;
+    }
 
-.footer {
-  display: flex;
-  justify-content: space-between;
-}
-
+    .footer {
+      display: flex;
+      justify-content: space-between;
+    }
   </style>
 </head>
 
@@ -87,55 +86,51 @@
       {{/each}}
     </script>
 
-    <script>
-    
+  <script>
+
     $(function () {
-  // 给时间补零的函数
-  function padZero(n) {
-    if (n < 10) {
-      return '0' + n
-    } else {
-      return n
-    }
-  }
-
-  // 定义格式化时间的过滤器
-  template.defaults.imports.dateFormat = function (dtStr) {
-    var dt = new Date(dtStr)
-
-    var y = dt.getFullYear()
-    var m = padZero(dt.getMonth() + 1)
-    var d = padZero(dt.getDate())
-
-    var hh = padZero(dt.getHours())
-    var mm = padZero(dt.getMinutes())
-    var ss = padZero(dt.getSeconds())
-
-    return y + '-' + m + '-' + d + ' ' + hh + ':' + mm + ':' + ss
-  }
-
-  // 获取新闻列表的函数
-  function getNewsList() {
-    $.get('http://www.liulongbin.top:3006/api/news', function (res) {
-      if (res.status !== 200) {
-        return alert('获取新闻列表数据失败！')
+      // 给时间补零的函数
+      function padZero(n) {
+        if (n < 10) {
+          return '0' + n
+        } else {
+          return n
+        }
       }
-      for (var i = 0; i < res.data.length; i++) {
-        // 把每一项的 tags 属性，从字符串改造成字符串的数组
-        res.data[i].tags = res.data[i].tags.split(',')
+
+      // 定义格式化时间的过滤器
+      template.defaults.imports.dateFormat = function (dtStr) {
+        var dt = new Date(dtStr)
+
+        var y = dt.getFullYear()
+        var m = padZero(dt.getMonth() + 1)
+        var d = padZero(dt.getDate())
+
+        var hh = padZero(dt.getHours())
+        var mm = padZero(dt.getMinutes())
+        var ss = padZero(dt.getSeconds())
+
+        return y + '-' + m + '-' + d + ' ' + hh + ':' + mm + ':' + ss
       }
-      console.log(res)
-      var htmlStr = template('tpl-news', res)
-      $('#news-list').html(htmlStr)
+
+      // 获取新闻列表的函数
+      function getNewsList() {
+        $.get('http://www.liulongbin.top:3006/api/news', function (res) {
+          if (res.status !== 200) {
+            return alert('获取新闻列表数据失败！')
+          }
+          for (var i = 0; i < res.data.length; i++) {
+            // 把每一项的 tags 属性，从字符串改造成字符串的数组
+            res.data[i].tags = res.data[i].tags.split(',')
+          }
+          console.log(res)
+          var htmlStr = template('tpl-news', res)
+          $('#news-list').html(htmlStr)
+        })
+      }
+
+      getNewsList()
     })
-  }
-
-  getNewsList()
-
-})
-
-    </script>
-
+  </script>
 </body>
-
 </html>

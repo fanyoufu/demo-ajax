@@ -55,28 +55,12 @@
 
     $(function () {
       function getVoice(txt) {
-
         let msg = new SpeechSynthesisUtterance(txt);
         // msg.text = '欢迎你来访问我的博客';
         window.speechSynthesis.speak(msg);
-
-        // $.ajax({
-        //   type:'get',
-        //   url:'http://ajax.frontend.itheima.net:3006/api/synthesize',
-        //   data:{
-        //     text: txt
-        //   },
-        //   success:function(res){
-        //     if(res.status === 200) {
-        //      $('#voice').attr('src',res.voiceUrl)
-        //     }
-        //   }
-        // })
-
       }
 
       function getReply(txt) {
-
         $.ajax({
           type: 'get',
           url: 'http://ajax.frontend.itheima.net:3006/api/robot',
@@ -94,12 +78,11 @@
             }
           }
         })
-
       }
+      
       $('#btn').click(function () {
-
         var word = $('#input_txt').val().trim();
-        $(this).val('');
+        $('#input_txt').val('');
         if (word.length === 0) {
           return;
         }
@@ -112,13 +95,10 @@
       })
       $('#input_txt').keyup((function (e) {
         if (e.keyCode === 13) {
-
           $('#btn').click()
         }
-
       }))
     })
   </script>
 </body>
-
 </html>

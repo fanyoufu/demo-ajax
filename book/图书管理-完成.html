@@ -9,6 +9,7 @@
 
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.js"></script>
+
 </head>
 
 <body>
@@ -78,19 +79,38 @@
         </table>
       </div>
     </div>
+    <button id="btaa">ie</button>
   </div>
+  <script>
+  document.getElementById('btaa').onclick = function() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('get', 'http://www.liulongbin.top:3006/api/getbooks');
+    xhr.send();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+           console.log( xhr.responseText )
+        }
+    };
+};
+
+  </script>
   <script>
     $(function () {
       // 获取图书列表数据
       function getBookList() {
-        $.get('http://www.liulongbin.top:3006/api/getbooks', function (res) {
-          if (res.status !== 200) return alert('获取数据失败！')
+        $.ajax({
+          type:'get',
+          url:'http://www.liulongbin.top:3006/api/getbooks',
+          cache:false,
+          success:function (res) {
+            if (res.status !== 200) return alert('获取数据失败！')
 
-          var rows = []
-          $.each(res.data, function (i, item) {
-            rows.push('<tr><td>' + item.id + '</td><td>' + item.bookname + '</td><td>' + item.author + '</td><td>' + item.publisher + '</td><td><a href="javascript:;" class="del" data-id="' + item.id + '">删除</a></td></tr>')
-          })
-          $('#tb').empty().append(rows.join(''))
+            var rows = []
+            $.each(res.data, function (i, item) {
+              rows.push('<tr><td>' + item.id + '</td><td>' + item.bookname + '</td><td>' + item.author + '</td><td>' + item.publisher + '</td><td><a href="javascript:;" class="del" data-id="' + item.id + '">删除</a></td></tr>')
+            })
+            $('#tb').empty().append(rows.join(''))
+          }
         })
       }
 
