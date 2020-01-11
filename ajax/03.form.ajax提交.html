@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>图书管理</title>
+  <link href="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+  <div class="ui page grid">
+    <!-- 添加图书的Panel面板 -->
+    <div class="ui row">
+      <div class="ui column fluid form segment">
+        <h3 class="ui header dividing">
+          <i class="book icon"></i>
+          <div class="content">
+            添加图书
+          </div>
+        </h3>
+        <!-- <form id="form" action='http://ajax.frontend.itheima.net:3006/api/addbook' method="post"> -->
+        <form  id="form">
+          <div class="required inline  field">
+            <label>书名</label>
+            <input name="bookname" placeholder="书名" type="text">
+          </div>
+          <div class="required inline  field">
+            <label>作者</label>
+            <input name="author" placeholder="作者" type="text">
+          </div>
+          <div class="required inline  field">
+            <label>出版社</label>
+            <input name="publisher" placeholder="出版社" type="text">
+          </div>
+          <button class="ui button blue submit">添加</button>
+        </from>
+    </div>
+  </div>
+  <script>
+      $(function() {
+        $('#form').submit(function(e) {
+            // 阻止表单的提交动作
+            e.preventDefault()
+
+            $.ajax({
+                url: 'http://ajax.frontend.itheima.net:3006/api/addbook',
+                type: 'post',
+                data: $('#form').serialize(),// 快速获取数据
+                success:function(res){
+                    console.log(res);  
+                }
+            }) 
+        })
+      })
+  </script>
+
+</body>
+</html>

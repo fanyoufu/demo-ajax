@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <!-- <link rel="stylesheet" href="css/reset.css" />
+  <link rel="stylesheet" href="css/main.css" /> -->
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.bootcss.com/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
+  <title>聊天机器人</title>
+  <style>
+    ul,
+    li {
+      padding: 0;
+    }
+
+    .wrap {
+      width: 450px;
+      height: 600px;
+      margin: 50px auto;
+      border: 1px solid #ebebeb;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .header {
+      height: 55px;
+      background: linear-gradient(90deg, rgba(246, 60, 47, 0.6), rgba(128, 58, 242, 0.6));
+      display: flex;
+      flex: 0;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header h3 {
+      color: #faf3fc;
+      line-height: 55px;
+      font-weight: normal;
+      letter-spacing: 2px;
+      margin-left: 25px;
+      font-size: 18px;
+      text-shadow: 0px 0px 5px #944846;
+    }
+
+    .header img {
+      margin-right: 10px;
+      border-radius: 20px;
+      box-shadow: 0 0 5px #f7f2fe;
+    }
+
+    .main {
+
+      background-color: #f4f3f3;
+      box-sizing: border-box;
+      padding: 10px 0;
+      flex: 1;
+      overflow: auto;
+
+    }
+
+    .talk_list li {
+      overflow: hidden;
+      margin: 20px 0px 30px;
+    }
+
+    .talk_list .left_word img {
+      float: left;
+      margin-left: 20px;
+    }
+
+    .talk_list .left_word span {
+      float: left;
+      background-color: #fe9697;
+      padding: 10px 15px;
+      max-width: 290px;
+      border-radius: 12px;
+      font-size: 16px;
+      color: #fff;
+      margin-left: 13px;
+      position: relative;
+      line-height: 24px;
+    }
+
+    .talk_list .left_word span:before {
+      content: '';
+      position: absolute;
+      left: -8px;
+      top: 3px;
+      width: 13px;
+      height: 12px;
+      background: url('./img/corner01.png') no-repeat;
+    }
+
+    .talk_list .right_word img {
+      float: right;
+      margin-right: 20px;
+    }
+
+    .talk_list .right_word span {
+      float: right;
+      background-color: #fff;
+      padding: 10px 15px;
+      max-width: 290px;
+      border-radius: 12px;
+      font-size: 16px;
+      color: #000;
+      margin-right: 13px;
+      position: relative;
+      line-height: 24px;
+      word-break: break-all;
+    }
+
+    .talk_list .right_word span:before {
+      content: '';
+      position: absolute;
+      right: -8px;
+      top: 3px;
+      width: 13px;
+      height: 12px;
+      background: url('../img/corner02.png') no-repeat;
+    }
+
+
+    .footer {
+      height: 60px;
+      padding: 5px 20px;
+      background-color: #fff;
+
+      flex: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .input_txt {
+      width: 270px;
+      height: 37px;
+      border: 0px;
+      background-color: #f4f3f3;
+
+      border-radius: 8px;
+      padding: 0px;
+      outline: none;
+      text-indent: 15px;
+    }
+
+    .input_sub {
+      width: 70px;
+      height: 37px;
+      border: 0px;
+      background-color: #fe9697;
+
+      border-radius: 8px;
+      padding: 0px;
+      outline: none;
+      color: #fff;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <!-- 头部 Header 区域 -->
+    <div class="header">
+      <h3>小思同学</h3>
+      <img src="img/person01.png" alt="icon" />
+    </div>
+    <!-- 中间 聊天内容区域 -->
+    <div class="main">
+      <ul id="talk_list" class="talk_list" style="top: 0px;">
+        <li class="left_word">
+          <img src="img/person01.png" /> <span>你好</span>
+        </li>
+        <li class="right_word">
+          <img src="img/person02.png" /> <span>你好哦</span>
+        </li>
+        <li class="left_word">
+          <img src="img/person01.png" /> <span>你好</span>
+        </li>
+        <li class="right_word">
+          <img src="img/person02.png" /> <span>你好哦</span>
+        </li>
+        <li class="left_word">
+          <img src="img/person01.png" /> <span>你好</span>
+        </li>
+        <li class="right_word">
+          <img src="img/person02.png" /> <span>你好哦</span>
+        </li>
+        <li class="left_word">
+          <img src="img/person01.png" /> <span>你好</span>
+        </li>
+        <li class="right_word">
+          <img src="img/person02.png" /> <span>你好哦</span>
+        </li>
+        <li class="left_word">
+          <img src="img/person01.png" /> <span>你好</span>
+        </li>
+        <li class="right_word">
+          <img src="img/person02.png" /> <span>你好哦</span>
+        </li>
+
+      </ul>
+    </div>
+    <!-- 底部 消息编辑区域 -->
+    <div class="footer">
+      <img src="img/person02.png" alt="icon" />
+      <input id="input_txt" type="text" placeholder="说的什么吧..." class="input_txt" />
+      <input id="btn" type="button" value="发 送" class="input_sub" />
+    </div>
+  </div>
+
+  <script>
+    function reset() {
+      // $(".main").getNiceScroll(0).resize().doScrollTop($("#talk_list").height(), 200);
+      $(".main").animate({ scrollTop: $('#talk_list').height() }, 500);
+    }
+    $(function () {
+
+      // $(".main").niceScroll();
+      reset();
+      function getVoice(txt) {
+        let msg = new SpeechSynthesisUtterance(txt);
+        window.speechSynthesis.speak(msg);
+      }
+
+      function getReply(txt) {
+        $.ajax({
+          type: 'get',
+          url: 'http://ajax.frontend.itheima.net:3006/api/robot',
+          data: {
+            spoken: txt
+          },
+          success: function (res) {
+            if (res.message === 'success') {
+              var word = res.data.info.text;
+              var str = `<li class="left_word"><img src="img/person01.png" /> <span>${word}</span></li>`
+              $('#talk_list').append(str);
+              reset();
+              getVoice(word)
+            }
+          }
+        })
+      }
+
+      $('#btn').click(function () {
+        var word = $('#input_txt').val().trim();
+        $('#input_txt').val('');
+        if (word.length === 0) {
+          return;
+        }
+        console.log(word);
+        var str = `<li class="right_word"><img src="img/person02.png" /> <span>${word}</span></li>`
+        $('#talk_list').append(str);
+        reset()
+
+
+        getReply(word)
+      })
+      $('#input_txt').keyup((function (e) {
+        if (e.keyCode === 13) {
+          $('#btn').click()
+        }
+      }))
+    })
+  </script>
+</body>
+
+</html>
